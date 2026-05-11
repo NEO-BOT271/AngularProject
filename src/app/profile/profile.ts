@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { AuthService } from '../services/auth';
 
+
 @Component({
   selector: 'app-profile',
   standalone: true,
@@ -86,7 +87,7 @@ export class Profile implements OnInit {
   }
   // method:delete /api/users/delete
   DeleteAccount() {
-    if (confirm('Are you absolutely sure? This action cannot be undone.')) {
+    if (confirm('Are you sure?')) {
       this.http.delete(`${environment.apiUrl}/api/users/delete`).subscribe({
         next: () => {
           this.authService.logout();
