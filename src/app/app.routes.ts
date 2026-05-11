@@ -1,3 +1,27 @@
 import { Routes } from '@angular/router';
-
-export const routes: Routes = [];
+import { LogIn } from './log-in/log-in';
+import { SignUp } from './sign-up/sign-up';
+import { Home } from './home/home';
+import { MenuPage } from './menu/menu';
+import {Cart} from './cart/cart'
+import { MainLayout } from './main-layout/main-layout';
+import { ForgotPassword } from './forgot-password/forgot-password';
+import { Card } from './card/card';
+import { Profile } from './profile/profile';
+export const routes: Routes = [
+  { path: 'login', component: LogIn },
+  { path: 'signup', component: SignUp },
+  { path: 'forgot', component: ForgotPassword },
+  {
+    path: '',
+    component: MainLayout,
+    children: [
+      { path: 'home', component: Home },
+      { path: 'menu', component: MenuPage },
+      { path: 'cart', component: Cart },
+      { path: 'card', component: Card },
+      { path: 'profile', component: Profile },
+      { path: '', redirectTo: 'home', pathMatch: 'full' }
+    ]
+  }
+];

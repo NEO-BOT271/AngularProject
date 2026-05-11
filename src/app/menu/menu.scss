@@ -1,0 +1,248 @@
+article {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    width: 100%;
+
+    aside {
+        padding-left: 70px;
+        padding-top: 30px;
+        width: 240px;
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+
+            label[for="vegetarian"] {
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+
+                input[type="checkbox"] {
+                    appearance: none;
+                    width: 40px;
+                    height: 20px;
+                    background: #e4e4e4;
+                    border-radius: 20px;
+                    position: relative;
+                    cursor: pointer;
+
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        width: 16px;
+                        height: 16px;
+                        background: white;
+                        border-radius: 50%;
+                        top: 2px;
+                        left: 2px;
+                        transition: 0.3s;
+                    }
+
+                    &:checked {
+                        background: #ff5a3c;
+
+                        &::before {
+                            transform: translateX(20px);
+                        }
+                    }
+                }
+            }
+
+            label[for="search"] {
+                input {
+                    width: 100%;
+                    height: 36px;
+                    border-radius: 5px;
+                    border: 1px solid rgb(221, 221, 221);
+                    background-color: rgb(247, 247, 247);
+
+                    &:focus {
+                        border: 2px solid #ff6b35;
+                        outline: none;
+                        box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.12);
+                    }
+                }
+            }
+
+            #speacial {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            button {
+                height: 36px;
+                width: 240px;
+                background: #f8f8f8;
+                border: 1px solid #eee;
+                border-radius: 10px;
+                font-weight: 500;
+                cursor: pointer;
+                transition: background 0.2s;
+
+                &:hover {
+                    background: #f0f0f0;
+                }
+            }
+        }
+    }
+
+    section {
+        width: 70%;
+    }
+}
+
+.style_range {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    background: #f1f1f1;
+    border-radius: 5px;
+    height: 6px;
+    outline: none;
+
+
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        background: #ffffff;
+        border: 2px solid #ff5a3c;
+        border-radius: 50%;
+        cursor: pointer;
+        margin-top: -7px;
+    }
+
+    &::-moz-range-thumb {
+        width: 18px;
+        height: 18px;
+        background: #ffffff;
+        border: 2px solid #ff5a3c;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    &::-moz-range-progress {
+        background-color: #ff5a3c;
+        height: 6px;
+        border-radius: 5px;
+    }
+}
+
+.menu-container {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    max-width: 1300px;
+    margin: 40px auto;
+    padding: 0 20px;
+
+    @media (max-width: 992px) {
+        flex-direction: column; 
+    }
+}
+
+.filter-sidebar {
+    width: 280px;
+    flex-shrink: 0;
+
+    @media (max-width: 992px) {
+        width: 100%;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        background: #fff;
+        padding: 20px;
+        border-radius: 15px;
+        border: 1px solid #eee;
+    }
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.product-card {
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid #eee;
+    transition: transform 0.2s;
+
+    &:hover {
+        transform: translateY(-5px);
+    }
+
+    .img-container {
+        height: 180px;
+        position: relative;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .veg-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #4caf50;
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+    }
+
+    .card-body {
+        padding: 15px;
+
+        h4 {
+            margin: 0 0 10px;
+            font-size: 1.1rem;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+
+            .price {
+                font-weight: 800;
+                color: #ff5a3c;
+                font-size: 1.2rem;
+            }
+
+            .rating {
+                color: #fbc02d;
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+.add-btn {
+    width: 100%;
+    background: #ff5a3c;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+
+    &:hover {
+        background: #e64a19;
+    }
+}
+

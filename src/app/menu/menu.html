@@ -1,0 +1,64 @@
+<article class="menu-page">
+  <aside class="sidebar">
+    <h3>Filters</h3>
+    
+    <div class="filter-section">
+      <label>Search</label>
+      <input type="text" [(ngModel)]="filters.search" (input)="onFilterChange()" placeholder="Search dishes...">
+    </div>
+
+    <div class="filter-section">
+      <label>Categories</label>
+      <div class="category-list">
+        @for (cat of categories(); track cat.id) {
+          <label class="checkbox-row">
+            <input type="checkbox" [checked]="filters.categoryId === cat.id" (change)="filters.categoryId = cat.id; onFilterChange()">
+            {{ cat.name }}
+          </label>
+        }
+      </div>
+    </div>
+
+    <div class="filter-section">
+      <label class="toggle">
+        Vegetarian Only
+        <input type="checkbox" [(ngModel)]="filters.isVegetarian" (change)="onFilterChange()">
+      </label>
+    </div>
+
+    <div class="filter-section">
+      <label>Max Price: ${{filters.maxPrice}}</label>
+      <input type="range" class="style_range" min="0" max="500" [(ngModel)]="filters.maxPrice" (change)="onFilterChange()">
+    </div>
+
+    <button class="clear-btn" (click)="filters.categoryId = undefined; onFilterChange()">Clear All Filters</button>
+  </aside>
+
+  <section class="content">
+    <div class="header">
+      <h1>Menu</h1>
+      <p>Showing {{ products().length }} products</p>
+    </div>
+
+    <div class="product-grid">
+      @for (item of products(); track item.id) {
+        <div class="product-card">
+          <div class="image-wrapper">
+            <img [src]="item.imageUrl" [alt]="item.name">
+          </div>
+          <div class="card-info">
+            <h4>{{ item.name }}</h4>
+            <p class="desc">{{ item.description }}</p>
+            <div class="meta">
+              <span class="rating">★ {{ item.rating }}</span>
+            </div>
+            <div class="card-footer">
+              <span class="price">${{ item.price | number:'1.2-2' }}</span>
+              <button class="add-to-cart">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+</article>

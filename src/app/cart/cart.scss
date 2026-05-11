@@ -1,0 +1,131 @@
+$primary-orange: #ff7043;
+
+.cart-wrapper {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 30px;
+  align-items: start;
+}
+
+.cart-card {
+  display: flex;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+  .product-thumb {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+
+  .details {
+    flex: 1;
+    padding-left: 20px;
+
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .description {
+      color: #888;
+      font-size: 0.9rem;
+      margin: 5px 0;
+    }
+  }
+}
+
+.stepper {
+  display: inline-flex;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+
+  button {
+    padding: 5px 12px;
+    border: none;
+    background: #fff;
+    cursor: pointer;
+  }
+
+  .qty {
+    padding: 5px 15px;
+    font-weight: bold;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+  }
+}
+
+.price-info {
+  text-align: right;
+
+  .unit {
+    display: block;
+    color: #999;
+    font-size: 0.8rem;
+  }
+
+  .row-total {
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: $primary-orange;
+  }
+}
+
+.summary-box {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 15px;
+  padding: 30px;
+  position: sticky;
+  top: 20px;
+
+  .summary-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+
+    &.total {
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: #000;
+    }
+  }
+
+  .orange-price {
+    color: $primary-orange;
+  }
+
+  .checkout-btn {
+    width: 100%;
+    background: $primary-orange;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.2s;
+
+    &:hover {
+      background-color: #ffa237;
+    }
+  }
+}
+
+.remove {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
