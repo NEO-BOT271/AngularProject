@@ -41,7 +41,13 @@ export class AuthService {
       tap((user) => this.currentUser.set(user))
     );
   }
-
+  updateProfile(userData: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/api/users/edit`, userData).pipe(
+      tap((updatedUser: any) => {
+        this.currentUser.set(updatedUser.data || updatedUser);
+      })
+    );
+  }
   logout() {
     localStorage.removeItem('token');
     this.currentUser.set(null);
@@ -49,4 +55,16 @@ export class AuthService {
   register(userData: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/api/auth/register`, userData);
   }
+  verifyEmail(email: string, code: string): Observable<any> {
+  const payload = { email, code };
+  return this.http.put(`${this.baseUrl}/api/auth/verify-email`, payload);
+}
+ resendVerification(email: string): Observable<any> {
+  if (!email) {
+    console.error("Email is missing!");
+    return throwError(() => new Error("Email is required"));
+  }
+  const url = `${this.baseUrl}/api/auth/resend-email-verification/${email}`;
+  return this.http.post(url, {});
+}
 }

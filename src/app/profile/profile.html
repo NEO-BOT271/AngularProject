@@ -2,17 +2,12 @@
   <h1 class="page-title">Profile Settings</h1>
 
   <div class="tab-navigation">
-    <button class="nav-tab" [class.active]="activeTab() === 'personal'" (click)="setTab('personal')">Personal
-      Info</button>
-    <button class="nav-tab" [class.active]="activeTab() === 'password'" (click)="setTab('password')">Change
-      Password</button>
-    <button class="nav-tab" [class.active]="activeTab() === 'settings'" (click)="setTab('settings')">Account
-      Settings</button>
+    <button class="nav-tab" [class.active]="activeTab() === 'personal'" (click)="setTab('personal')">Personal Info</button>
+    <button class="nav-tab" [class.active]="activeTab() === 'password'" (click)="setTab('password')">Change Password</button>
+    <button class="nav-tab" [class.active]="activeTab() === 'settings'" (click)="setTab('settings')">Account Settings</button>
   </div>
 
   <div class="settings-card">
-
-    <!--                                  Personal Info                                        -->
     @if (activeTab() === 'personal' && user()) {
     <div class="settings-header">
       <h2>Personal Information</h2>
@@ -22,8 +17,13 @@
     <form (ngSubmit)="onUpdateProfile()" class="settings-form">
       <div class="avatar-container">
         <div class="avatar-placeholder">
-          <img [src]="user().picture || '/default-avatar.png'" alt="Profile">
+          <img [src]="user().picture || '/default-avatar.png'" alt="Profile" onerror="this.src='/default-avatar.png'">
         </div>
+      </div>
+
+      <div class="form-control">
+        <label>Picture</label>
+        <input type="text" [(ngModel)]="user().picture" name="picture" placeholder="https://example.com/image.jpg">
       </div>
 
       <div class="form-row">
@@ -45,30 +45,30 @@
 
       <div class="form-control">
         <label>Phone Number</label>
-        <input type="text" [(ngModel)]="user().phoneNumber" name="phoneNumber" placeholder="+995 ...">
+        <input type="text" [(ngModel)]="user().phoneNumber" name="phoneNumber" placeholder="593...">
       </div>
 
       <div class="form-control">
         <label>Address</label>
-        <textarea [(ngModel)]="user().address" name="address" rows="3" placeholder="Your street address"></textarea>
+        <textarea [(ngModel)]="user().address" name="address" rows="3" placeholder="Enter your address"></textarea>
       </div>
 
       <div class="form-control">
         <label>Age</label>
         <input type="number" [(ngModel)]="user().age" name="age">
       </div>
+
       <div id="buttonstyle">
         <button type="submit" class="save-button" [disabled]="loading()">
           {{ loading() ? 'Saving...' : 'Save Changes' }}
         </button>
-        <button id="logouti" (click)="logout()">
+        <button type="button" id="logouti" (click)="logout()">
           Log Out
         </button>
       </div>
     </form>
     }
 
-    <!--                               Change Password                                    -->
     @if (activeTab() === 'password') {
     <div class="settings-header">
       <h2>Change Password</h2>
@@ -95,7 +95,7 @@
       <button type="submit" class="save-button" [disabled]="loading()">Update Password</button>
     </form>
     }
-    <!--                                      Delete                           -->
+
     @if (activeTab() === 'settings') {
     <div class="settings-header">
       <h2>Account Settings</h2>
@@ -107,6 +107,5 @@
       <button (click)='DeleteAccount()' class="delete-btn">Delete Account</button>
     </div>
     }
-
   </div>
 </div>

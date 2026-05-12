@@ -29,18 +29,23 @@ export class SignUp {
     this.hidePassword.update(v => !v);
   }
 
-  onSubmit() {
-    this.loading.set(true);
-    this.errorMessage.set('');
+ onSubmit() {
+  this.loading.set(true);
+  this.errorMessage.set('');
 
-    this.authService.register(this.formData()).subscribe({
-      next: () => {
-        this.router.navigate(['/login']);
-      },
-      error: (err) => {
-        this.errorMessage.set(err.error?.detail || 'Registration failed');
-        this.loading.set(false);
-      }
-    });
-  }
+  const emailForVerify = this.formData().email;
+
+  this.authService.register(this.formData()).subscribe({
+    next: () => {
+      this.router.navigate(['/verify'], { 
+        queryParams: { email: emailForVerify } 
+      });
+    },
+    error: (err) => {
+      this.errorMessage.set(err.error?.detail || 'Registration failed');
+      this.loading.set(false);
+    }
+  });
+}
+
 }

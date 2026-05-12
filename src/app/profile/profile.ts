@@ -44,12 +44,27 @@ export class Profile implements OnInit {
   // method:put /api/users/edit
   onUpdateProfile() {
     this.loading.set(true);
-    this.http.put(`${environment.apiUrl}/api/users/edit`, this.user()).subscribe({
+
+    const updatePayload = {
+      firstName: this.user().firstName,
+      lastName: this.user().lastName,
+      phoneNumber: this.user().phoneNumber || "",
+      picture: this.user().picture || "",
+      address: this.user().address || "",
+      age: Number(this.user().age) || 0
+    };
+
+    this.http.put(`${environment.apiUrl}/api/users/edit`, updatePayload).subscribe({
       next: () => {
         this.loading.set(false);
-        alert('Profile Updated!');
+        alert('Profile updated successfully!');
+        this.fetchProfile();
       },
-      error: () => this.loading.set(false)
+      error: (err) => {
+        this.loading.set(false);
+        console.error(err);
+        alert('Failed to update profile.');
+      }
     });
   }
 
@@ -97,8 +112,8 @@ export class Profile implements OnInit {
     }
   }
   logout() {
-  localStorage.removeItem('token');
-  window.location.href = '/';
-}
+    localStorage.removeItem('token');
+    window.location.href = '/';
+  }
 
 }
