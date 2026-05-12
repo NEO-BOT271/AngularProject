@@ -200,6 +200,7 @@
         grid-template-columns: repeat(3, 1fr);
         gap: 30px;
 
+
         @media (max-width: 992px) {
             grid-template-columns: repeat(2, 1fr);
         }
@@ -216,6 +217,12 @@
         overflow: hidden;
         text-align: left;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        cursor: pointer;
+        transition: transform 0.2s ease-in-out;
+
+        &:hover {
+            transform: translateY(-5px);
+        }
 
         .card-img img {
             width: 100%;

@@ -29,4 +29,7 @@ export class ProductService {
       map(res => Array.isArray(res) ? res : res.data || [])
     );
   }
+getProductById(id: number): Observable<any> {
+  return this.http.get(`${this.baseUrl}/api/products/${id}`);
+}
 }
