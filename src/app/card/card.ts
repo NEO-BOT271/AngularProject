@@ -1,13 +1,13 @@
 import { Component, OnInit, signal, inject } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router'; // Fixes routerLink error
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { DecimalPipe, CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [DecimalPipe, CommonModule, RouterLink], 
+  imports: [ CommonModule, RouterLink], 
   templateUrl: './card.html',
   styleUrl: './card.scss'
 })
@@ -36,16 +36,18 @@ export class Card implements OnInit {
     });
   }
 
-  fetchRelated(currentId: string) {
-    this.http.get(`${environment.apiUrl}/api/products`).subscribe({
-      next: (res: any) => {
-        const all = res.data?.products || res.data || [];
-        const filtered = all.filter((p: any) => p.id !== +currentId);
-        const randomStart = Math.floor(Math.random() * Math.max(0, filtered.length - 3));
-        this.relatedProducts.set(filtered.slice(randomStart, randomStart + 3));
-      }
-    });
-  }
+fetchRelated(currentId: string) {
+  this.http.get(`${environment.apiUrl}/api/products`).subscribe({
+    next: (res: any) => {
+      const all = res.data?.products || [];
+      const filtered = all.filter((p: any) => p.id !== +currentId);
+      const maxIndex = Math.max(0, filtered.length - 3);
+      const randomStart = Math.floor(Math.random() * (maxIndex + 1));
+      const randomSlice = filtered.slice(randomStart, randomStart + 3);
+      this.relatedProducts.set(randomSlice);
+    }
+  });
+}
 
   updateQty(change: number) {
     const newQty = this.quantity() + change;
@@ -62,6 +64,7 @@ export class Card implements OnInit {
     }).subscribe({
       next: () => alert('Added to cart!'),
       error: () => alert('Failed to add. Are you logged in?')
+
     });
   }
 }

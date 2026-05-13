@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { LogIn } from './log-in/log-in';
 import { SignUp } from './sign-up/sign-up';
 import { Home } from './home/home';
-import { MenuPage } from './menu/menu';
+import { Menu } from './menu/menu';
 import { CartPage } from './cart/cart'
 import { MainLayout } from './main-layout/main-layout';
 import { ForgotPassword } from './forgot-password/forgot-password';
@@ -19,7 +19,7 @@ export const routes: Routes = [
     component: MainLayout,
     children: [
       { path: 'home', component: Home },
-      { path: 'menu', component: MenuPage },
+      { path: 'menu', component: Menu},
       { path: 'cart', component: CartPage },
       { path: 'card', component: Card },
       { path: 'profile', component: Profile },

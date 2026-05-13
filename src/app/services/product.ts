@@ -2,34 +2,42 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Category, Product, FilterParams } from '../interfaces/menus';
-
+interface FilterState {
+  search: string;
+  categoryId: number | null;
+  isVegetarian: boolean;
+  spiciness: number;
+  minRating: number;
+  minPrice: number;
+  maxPrice: number;
+}
 @Injectable({ providedIn: 'root' })
 export class ProductService {
   private http = inject(HttpClient);
   private baseUrl = `${environment.apiUrl}/api`;
 
-  getCategories(): Observable<Category[]> {
+  getCategories(): Observable<any[]> {
     return this.http.get<any>(`${this.baseUrl}/categories`).pipe(
-      map(res => Array.isArray(res) ? res : res.data || [])
+      map(res => res.data || res)
     );
   }
 
-  getFilteredProducts(f: FilterParams): Observable<Product[]> {
+  getFilteredProducts(f: FilterState): Observable<any[]> {
     let params = new HttpParams()
-      .set('minPrice', f.minPrice.toString())
-      .set('maxPrice', f.maxPrice.toString())
-      .set('minRating', f.minRating.toString())
-      .set('isVegetarian', f.isVegetarian.toString());
+      .set('MinPrice', f.minPrice.toString())
+      .set('MaxPrice', f.maxPrice.toString())
+      .set('Vegetarian', f.isVegetarian.toString())
+      .set('Spiciness', f.spiciness.toString()); // Added Spiciness to API call
 
-    if (f.search) params = params.set('search', f.search);
-    if (f.categoryId) params = params.set('categoryId', f.categoryId.toString());
+    if (f.search) params = params.set('Query', f.search);
+    if (f.categoryId) params = params.set('CategoryId', f.categoryId.toString());
+    if (f.minRating > 0) params = params.set('Rate', f.minRating.toString());
 
     return this.http.get<any>(`${this.baseUrl}/products/filter`, { params }).pipe(
-      map(res => Array.isArray(res) ? res : res.data || [])
+      map(res => res.data?.products || res.products || [])
     );
   }
-getProductById(id: number): Observable<any> {
-  return this.http.get(`${this.baseUrl}/api/products/${id}`);
-}
+  addToCart(productId: number, quantity: number = 1): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/api/cart/add-to-cart`, { productId, quantity });
+  }
 }
