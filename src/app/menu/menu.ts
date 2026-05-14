@@ -64,7 +64,7 @@ filters = signal<FilterState>({
     search: 'Query',
     categoryId: 'CategoryId',
     isVegetarian: 'Vegetarian',
-    spiciness: 'Spiciness', // Added
+    spiciness: 'Spiciness',
     minRating: 'Rate',
     minPrice: 'MinPrice',
     maxPrice: 'MaxPrice'

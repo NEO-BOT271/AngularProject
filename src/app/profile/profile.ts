@@ -73,7 +73,7 @@ export class Profile implements OnInit {
     const data = this.passwordData();
 
     if (data.newPassword !== data.confirmPassword) {
-      alert("New passwords do not match!");
+      alert("New password doesn't match!");
       return;
     }
 
@@ -95,7 +95,7 @@ export class Profile implements OnInit {
         this.loading.set(false);
         const errorMsg = err.error?.errors?.ConfirmPassword?.[0] ||
           err.error?.detail ||
-          'Password update failed';
+          'Password update failed!';
         alert(errorMsg);
       }
     });
