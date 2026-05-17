@@ -18,17 +18,17 @@ interface FilterState {
   styleUrl: './menu.scss'
 })
 export class Menu implements OnInit {
-private productService = inject(ProductService);
+  private productService = inject(ProductService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
   categories = signal<any[]>([]);
   products = signal<any[]>([]);
-filters = signal<FilterState>({
+  filters = signal<FilterState>({
     search: '',
     categoryId: null,
     isVegetarian: false,
-    spiciness: 0, 
+    spiciness: 0,
     minRating: 0,
     minPrice: 0,
     maxPrice: 500
@@ -46,7 +46,7 @@ filters = signal<FilterState>({
         maxPrice: params['MaxPrice'] ? +params['MaxPrice'] : 500,
         minRating: params['Rate'] ? +params['Rate'] : 0
       };
-      
+
       this.filters.set(urlFilters);
       this.loadProducts(urlFilters);
     });
@@ -59,28 +59,34 @@ filters = signal<FilterState>({
   }
 
 
- updateFilter(key: keyof FilterState, value: any) {
-  const keyMap: Record<string, string> = {
-    search: 'Query',
-    categoryId: 'CategoryId',
-    isVegetarian: 'Vegetarian',
-    spiciness: 'Spiciness',
-    minRating: 'Rate',
-    minPrice: 'MinPrice',
-    maxPrice: 'MaxPrice'
-  };
+  updateFilter(key: keyof FilterState, value: any) {
+    const keyMap: Record<string, string> = {
+      search: 'Query',
+      categoryId: 'CategoryId',
+      isVegetarian: 'Vegetarian',
+      spiciness: 'Spiciness',
+      minRating: 'Rate',
+      minPrice: 'MinPrice',
+      maxPrice: 'MaxPrice'
+    };
 
-  this.router.navigate([], {
-    relativeTo: this.route,
-    queryParams: { [keyMap[key]]: value },
-    queryParamsHandling: 'merge'
-  });
-}
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { [keyMap[key]]: value },
+      queryParamsHandling: 'merge'
+    });
+  }
   clearAll() {
     this.router.navigate([], { queryParams: {} });
   }
 
   handleAddToCart(productId: number) {
+    const token = localStorage.getItem('token');
+
+    if (!token || token === 'null') {
+      this.router.navigate(['/login']);
+      return;
+    }
     this.productService.addToCart(productId, 1).subscribe({
       next: (res) => {
         alert('Product added to cart!');
